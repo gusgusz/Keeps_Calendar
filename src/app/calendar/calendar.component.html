@@ -1,7 +1,13 @@
 
 <h1>Calendário Dinâmico</h1>
 
-<table>
+<div>
+    <button (click)="prevMonth()">Mês Anterior</button>
+    <span>{{ currentYear }} - {{ currentMonth + 1 }}</span>
+    <button (click)="nextMonth()">Próximo Mês</button>
+  </div>
+  
+<table class="calendar">
   <thead>
     <tr>
       <th class="domingo">Domingo</th>

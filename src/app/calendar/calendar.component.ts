@@ -7,14 +7,20 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CalendarComponent implements OnInit {
   weeks: (number | null)[][] = [];
+  currentYear: number = 0;
+  currentMonth: number = 0;
 
   constructor() { }
 
   ngOnInit(): void {
-    this.generateCalendar(2023, 9);
+    const today = new Date();
+    this.currentYear = today.getFullYear();
+    this.currentMonth = today.getMonth();
+    this.generateCalendar(this.currentYear, this.currentMonth);
   }
 
   generateCalendar(year: number, month: number): void {
+    this.weeks = [];
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const totalDays = lastDay.getDate();
@@ -39,7 +45,7 @@ export class CalendarComponent implements OnInit {
   getDayClass(day: number | null): string {
     if (!day) return 'empty';
 
-    const dayOfWeek = new Date(2023, 9, day).getDay();
+    const dayOfWeek = new Date(this.currentYear, this.currentMonth, day).getDay();
     switch (dayOfWeek) {
       case 0:
         return 'domingo';
@@ -58,5 +64,25 @@ export class CalendarComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  // Função para avançar para o próximo mês
+  nextMonth(): void {
+    this.currentMonth++;
+    if (this.currentMonth > 11) {
+      this.currentMonth = 0;
+      this.currentYear++;
+    }
+    this.generateCalendar(this.currentYear, this.currentMonth);
+  }
+
+  // Função para voltar para o mês anterior
+  prevMonth(): void {
+    this.currentMonth--;
+    if (this.currentMonth < 0) {
+      this.currentMonth = 11;
+      this.currentYear--;
+    }
+    this.generateCalendar(this.currentYear, this.currentMonth);
   }
 }

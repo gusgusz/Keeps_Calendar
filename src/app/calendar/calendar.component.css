@@ -1,52 +1,42 @@
-body {
-    font-family: Arial, sans-serif;
-  }
-  
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
-  
-  th, td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: center;
-  }
-  
-  th {
-    background-color: #f0f0f0;
-  }
-  
-  .empty {
-    visibility: hidden;
-  }
-  
-  .domingo {
-    color: red;
-  }
-  
-  .segunda {
-    color: blue;
-  }
-  
-  .terca {
-    color: green;
-  }
-  
-  .quarta {
-    color: orange;
-  }
-  
-  .quinta {
-    color: purple;
-  }
-  
-  .sexta {
-    color: brown;
-  }
-  
-  .sabado {
-    color: black;
-  }
-  
+/* Estilo para a tabela do calendário */
+.calendar {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+/* Estilo para as células das datas */
+.calendar td {
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+/* Estilo para as células das datas com fundo alternado */
+.calendar tr:nth-child(odd) td {
+  background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
+}
+
+.calendar tr:nth-child(even) td {
+  background-color: #e6e6e6; /* Cor de fundo para linhas pares */
+}
+
+/* Estilo para os cabeçalhos da tabela (dias da semana) */
+.calendar th {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+}
+
+/* Estilo para os botões de navegação do mês */
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #0056b3;
+}
