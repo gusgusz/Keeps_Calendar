@@ -1,12 +1,11 @@
-
 <h1>Calendário Dinâmico</h1>
 
 <div>
-    <button (click)="prevMonth()">Mês Anterior</button>
-    <span>{{ currentYear }} - {{ currentMonth + 1 }}</span>
-    <button (click)="nextMonth()">Próximo Mês</button>
-  </div>
-  
+  <button (click)="prevMonth()">Mês Anterior</button>
+  <span>{{ currentYear }} - {{ currentMonth + 1 }}</span>
+  <button (click)="nextMonth()">Próximo Mês</button>
+</div>
+
 <table class="calendar">
   <thead>
     <tr>
@@ -25,6 +24,14 @@
         <ng-container *ngFor="let day of week">
           <td [ngClass]="getDayClass(day)">
             {{ day || '' }}
+            <button *ngIf="day !== null" (click)="addReminder(day)">Add Reminder</button>
+            <ul *ngIf="day !== null && reminders[day]">
+              <li *ngFor="let reminder of reminders[day]!">
+                <span [style.color]="reminder.color">{{ reminder.text }}</span>
+                <button (click)="editReminder(day!, reminder)">Edit</button>
+                <button (click)="deleteReminder(day!, reminder)">Delete</button>
+              </li>
+            </ul>
           </td>
         </ng-container>
       </tr>

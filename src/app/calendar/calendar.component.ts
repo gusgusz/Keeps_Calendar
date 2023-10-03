@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Reminder } from '../reminder';
 
 @Component({
   selector: 'app-calendar',
@@ -9,8 +10,9 @@ export class CalendarComponent implements OnInit {
   weeks: (number | null)[][] = [];
   currentYear: number = 0;
   currentMonth: number = 0;
+  reminders: Reminder[][] = Array(32).fill(null).map(() => []);
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     const today = new Date();
@@ -42,6 +44,43 @@ export class CalendarComponent implements OnInit {
     }
   }
 
+  
+  addReminder(day: number | null): void {
+    if (day !== null && this.reminders[day] !== null) {
+      const reminderText = prompt('Enter reminder (max 30 chars):');
+      if (reminderText) {
+        const reminder: Reminder = {
+          text: reminderText.substring(0, 30),
+          color: prompt('Enter reminder color: (e.g., red, blue, green)') || 'blue',
+        };
+  
+        if (this.reminders[day]) {
+          this.reminders[day].push(reminder);
+        }
+      }
+    }
+  }
+
+
+
+  editReminder(day: number | null, reminder: Reminder): void {
+    if (day !== null && this.reminders[day] !== null) {
+      const newText = prompt('Edit reminder:', reminder.text);
+      if (newText) {
+        reminder.text = newText.substring(0, 30);
+      }
+    }
+  }
+
+  deleteReminder(day: number | null, reminder: Reminder): void {
+    if (day !== null && this.reminders[day] !== null) {
+      const index = this.reminders[day]!.indexOf(reminder); // Non-null assertion operator (!)
+      if (index !== -1) {
+        this.reminders[day]!.splice(index, 1); // Non-null assertion operator (!)
+      }
+    }
+  }
+
   getDayClass(day: number | null): string {
     if (!day) return 'empty';
 
@@ -66,7 +105,6 @@ export class CalendarComponent implements OnInit {
     }
   }
 
-  // Função para avançar para o próximo mês
   nextMonth(): void {
     this.currentMonth++;
     if (this.currentMonth > 11) {
@@ -76,7 +114,6 @@ export class CalendarComponent implements OnInit {
     this.generateCalendar(this.currentYear, this.currentMonth);
   }
 
-  // Função para voltar para o mês anterior
   prevMonth(): void {
     this.currentMonth--;
     if (this.currentMonth < 0) {
