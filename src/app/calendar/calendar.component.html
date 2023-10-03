@@ -1,0 +1,27 @@
+
+<h1>Calendário Dinâmico</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th class="domingo">Domingo</th>
+      <th class="segunda">Segunda</th>
+      <th class="terca">Terça</th>
+      <th class="quarta">Quarta</th>
+      <th class="quinta">Quinta</th>
+      <th class="sexta">Sexta</th>
+      <th class="sabado">Sábado</th>
+    </tr>
+  </thead>
+  <tbody>
+    <ng-container *ngFor="let week of weeks">
+      <tr>
+        <ng-container *ngFor="let day of week">
+          <td [ngClass]="getDayClass(day)">
+            {{ day || '' }}
+          </td>
+        </ng-container>
+      </tr>
+    </ng-container>
+  </tbody>
+</table>
