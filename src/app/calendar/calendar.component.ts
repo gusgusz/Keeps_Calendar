@@ -26,27 +26,16 @@ export class CalendarComponent implements OnInit {
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);
     const totalDays = lastDay.getDate();
-
+  
     let currentDate = 1;
-
+  
     for (let i = 0; i < 6; i++) {
       const week: (number | null)[] = [];
       for (let j = 0; j < 7; j++) {
-        if (i === 0 && j < firstDay.getDay()) {
-          week.push(null);
-        } else if (currentDate <= totalDays) {
-          const currentDate = j + i * 7 - firstDay.getDay() + 1;
-          week.push(currentDate);
-          const dateKey = this.getDateKey(year, month, currentDate);
-          if (!this.reminders[year]) {
-            this.reminders[year] = {};
-          }
-          if (!this.reminders[year][month]) {
-            this.reminders[year][month] = {};
-          }
-          if (!this.reminders[year][month][currentDate]) {
-            this.reminders[year][month][currentDate] = [];
-          }
+        const dayIndex = j + i * 7 - firstDay.getDay() + 1;
+  
+        if (dayIndex >= 1 && dayIndex <= totalDays) {
+          week.push(dayIndex);
         } else {
           week.push(null);
         }
@@ -54,16 +43,23 @@ export class CalendarComponent implements OnInit {
       this.weeks.push(week);
     }
   }
-
+  
   addReminder(day: number | null): void {
     if (day !== null) {
       const year = this.currentYear;
       const month = this.currentMonth;
       const dateKey = this.getDateKey(year, month, day);
+  
+      if (!this.reminders[year]) {
+        this.reminders[year] = {};
+      }
+      if (!this.reminders[year][month]) {
+        this.reminders[year][month] = {};
+      }
       if (!this.reminders[year][month][day]) {
         this.reminders[year][month][day] = [];
       }
-
+  
       const reminderText = prompt('Enter reminder (max 30 chars):');
       if (reminderText) {
         const reminder: Reminder = {
@@ -74,6 +70,7 @@ export class CalendarComponent implements OnInit {
       }
     }
   }
+  
 
   editReminder(day: number | null, reminder: Reminder): void {
     if (day !== null) {

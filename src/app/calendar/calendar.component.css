@@ -26,6 +26,7 @@
   height: 80px;
   position: relative;
   padding: 10px;
+  border: 1px solid #ccc; /* Adicionando borda cinza */
 }
 
 /* Estilo para os números no canto superior esquerdo */
@@ -89,16 +90,18 @@
   width: 100%;
 }
 
+
+
 /* Estilo para os botões de editar e excluir */
-.calendar-table td .reminder-list li .edit-button,
-.calendar-table td .reminder-list li .delete-button {
-  padding: 2px 10px;
-  font-size: 12px;
-  margin-left: 5px;
+.but{
+  padding: 0; /* Remover o padding para tornar os botões mais compactos */
+  background: transparent; /* Remover o fundo */
+  border: none; /* Remover a borda */
+  font-size: 12px; /* Tamanho do ícone */
 }
 
-.calendar-table td .reminder-list li .edit-button:hover,
-.calendar-table td .reminder-list li .delete-button:hover {
-  opacity: 0.8;
-  cursor: pointer;
+/* Estilo para os ícones dentro dos botões */
+.calendar-table td .reminder-list li .edit-button mat-icon,
+.calendar-table td .reminder-list li .delete-button mat-icon {
+  font-size: 12px; /* Tamanho do ícone */
 }
