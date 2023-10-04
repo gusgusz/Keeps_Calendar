@@ -1,4 +1,4 @@
-<h1>Calendário Dinâmico</h1>
+<h1>Keeps Calendar</h1>
 
 <div class="calendar-controls">
   <button class="control-button" (click)="prevMonth()">Mês Anterior</button>
@@ -29,8 +29,13 @@
               <li *ngFor="let reminder of reminders[day]!">
                 <div class="reminder-item">
                   <span class="reminder-text" [style.color]="reminder.color">{{ reminder.text }}</span>
-                  <button class="edit-button" (click)="editReminder(day!, reminder)">Editar</button>
-                  <button class="delete-button" (click)="deleteReminder(day!, reminder)">Excluir</button>
+            <button mat-icon-button (click)="editReminder(getDateKey(day!), reminder)">
+  <mat-icon>edit</mat-icon>
+</button>
+<button mat-icon-button (click)="deleteReminder(getDateKey(day!), reminder)">
+  <mat-icon>delete</mat-icon>
+</button>
+
                 </div>
               </li>
             </ul>

@@ -10,7 +10,8 @@ export class CalendarComponent implements OnInit {
   weeks: (number | null)[][] = [];
   currentYear: number = 0;
   currentMonth: number = 0;
-  reminders: Reminder[][] = Array(32).fill(null).map(() => []);
+  reminders: { [date: string]: Reminder[] } = {};
+
 
   constructor() {}
 
@@ -28,14 +29,21 @@ export class CalendarComponent implements OnInit {
     const totalDays = lastDay.getDate();
 
     let currentDate = 1;
+
+
+  
     for (let i = 0; i < 6; i++) {
       const week: (number | null)[] = [];
       for (let j = 0; j < 7; j++) {
         if (i === 0 && j < firstDay.getDay()) {
           week.push(null);
         } else if (currentDate <= totalDays) {
+          const currentDate = j + i * 7 - firstDay.getDay() + 1;
           week.push(currentDate);
-          currentDate++;
+          const dateKey = this.getDateKey(currentDate);
+          if (!this.reminders[dateKey]) {
+            this.reminders[dateKey] = [];
+          }
         } else {
           week.push(null);
         }
@@ -43,43 +51,49 @@ export class CalendarComponent implements OnInit {
       this.weeks.push(week);
     }
   }
-
   
   addReminder(day: number | null): void {
-    if (day !== null && this.reminders[day] !== null) {
+    if (day !== null) {
+      const dateKey = this.getDateKey(day);
+      if (!this.reminders[dateKey]) {
+        this.reminders[dateKey] = [];
+      }
+  
       const reminderText = prompt('Enter reminder (max 30 chars):');
       if (reminderText) {
         const reminder: Reminder = {
           text: reminderText.substring(0, 30),
           color: prompt('Enter reminder color: (e.g., red, blue, green)') || 'blue',
         };
+        this.reminders[dateKey].push(reminder);
+      }
+    }
+  }
   
-        if (this.reminders[day]) {
-          this.reminders[day].push(reminder);
-        }
-      }
+  editReminder(dateKey: string, reminder: Reminder): void {
+    const newText = prompt('Edit reminder:', reminder.text);
+    if (newText) {
+      reminder.text = newText.substring(0, 30);
     }
   }
-
-
-
-  editReminder(day: number | null, reminder: Reminder): void {
-    if (day !== null && this.reminders[day] !== null) {
-      const newText = prompt('Edit reminder:', reminder.text);
-      if (newText) {
-        reminder.text = newText.substring(0, 30);
-      }
+  
+  deleteReminder(dateKey: string, reminder: Reminder): void {
+    const index = this.reminders[dateKey].indexOf(reminder);
+    if (index !== -1) {
+      this.reminders[dateKey].splice(index, 1);
     }
   }
-
-  deleteReminder(day: number | null, reminder: Reminder): void {
-    if (day !== null && this.reminders[day] !== null) {
-      const index = this.reminders[day]!.indexOf(reminder); // Non-null assertion operator (!)
-      if (index !== -1) {
-        this.reminders[day]!.splice(index, 1); // Non-null assertion operator (!)
-      }
-    }
+  
+  public getDateKey(day: number): string {
+    const yearMonth = `${this.currentYear}-${this.padZero(this.currentMonth + 1)}`;
+    return `${yearMonth}-${this.padZero(day)}`;
   }
+  
+  
+  private padZero(num: number): string {
+    return num < 10 ? `0${num}` : `${num}`;
+  }
+  
 
   getDayClass(day: number | null): string {
     if (!day) return 'empty';
