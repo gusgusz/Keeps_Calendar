@@ -1,42 +1,104 @@
+/* Estilo para os controles do calendário */
+.calendar-controls {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.control-button {
+  padding: 5px 10px;
+  font-size: 14px;
+}
+
+.current-month {
+  font-size: 1.2em;
+}
+
 /* Estilo para a tabela do calendário */
-.calendar {
+.calendar-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
 }
 
-/* Estilo para as células das datas */
-.calendar td {
-  padding: 10px;
-  text-align: center;
-  border: 1px solid #ddd;
-}
-
-/* Estilo para as células das datas com fundo alternado */
-.calendar tr:nth-child(odd) td {
-  background-color: #f2f2f2; /* Cor de fundo para linhas ímpares */
-}
-
-.calendar tr:nth-child(even) td {
-  background-color: #e6e6e6; /* Cor de fundo para linhas pares */
-}
-
-/* Estilo para os cabeçalhos da tabela (dias da semana) */
-.calendar th {
-  background-color: #333;
-  color: #fff;
+/* Estilo para as células do calendário */
+.calendar-table td {
+  width: 80px;
+  height: 80px;
+  position: relative;
   padding: 10px;
 }
 
-/* Estilo para os botões de navegação do mês */
-button {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 5px 10px;
+/* Estilo para os números no canto superior esquerdo */
+.calendar-table td .day-number {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  font-size: 0.8em;
+}
+
+/* Estilo para os botões (quadrados) com números */
+.calendar-table td .reminder-button {
+  background-color: white;
+  border: 1px solid #ccc;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.5;
+  font-size: 16px;
+}
+
+.calendar-table td .reminder-button:hover {
+  opacity: 0.8;
+}
+
+/* Estilo para as células dos dias com fundo branco */
+.calendar-table td:empty {
+  background-color: white;
+}
+
+/* Estilo para os lembretes */
+.calendar-table td .reminder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.calendar-table td .reminder-list li {
+  display: flex;
+  align-items: center;
+  font-family: 'Arial', sans-serif;
+  font-size: 12px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 5px;
+}
+
+.calendar-table td .reminder-list li .reminder-text {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.calendar-table td .reminder-list li .reminder-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 8px;
+  width: 100%;
+}
+
+/* Estilo para os botões de editar e excluir */
+.calendar-table td .reminder-list li .edit-button,
+.calendar-table td .reminder-list li .delete-button {
+  padding: 2px 10px;
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+.calendar-table td .reminder-list li .edit-button:hover,
+.calendar-table td .reminder-list li .delete-button:hover {
+  opacity: 0.8;
   cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
 }

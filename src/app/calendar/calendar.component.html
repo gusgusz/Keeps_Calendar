@@ -1,21 +1,21 @@
 <h1>Calendário Dinâmico</h1>
 
-<div>
-  <button (click)="prevMonth()">Mês Anterior</button>
-  <span>{{ currentYear }} - {{ currentMonth + 1 }}</span>
-  <button (click)="nextMonth()">Próximo Mês</button>
+<div class="calendar-controls">
+  <button class="control-button" (click)="prevMonth()">Mês Anterior</button>
+  <span class="current-month">{{ currentYear }} - {{ currentMonth + 1 }}</span>
+  <button class="control-button" (click)="nextMonth()">Próximo Mês</button>
 </div>
 
-<table class="calendar">
+<table class="calendar-table">
   <thead>
     <tr>
-      <th class="domingo">Domingo</th>
-      <th class="segunda">Segunda</th>
-      <th class="terca">Terça</th>
-      <th class="quarta">Quarta</th>
-      <th class="quinta">Quinta</th>
-      <th class="sexta">Sexta</th>
-      <th class="sabado">Sábado</th>
+      <th class="day-heading domingo">Domingo</th>
+      <th class="day-heading segunda">Segunda</th>
+      <th class="day-heading terca">Terça</th>
+      <th class="day-heading quarta">Quarta</th>
+      <th class="day-heading quinta">Quinta</th>
+      <th class="day-heading sexta">Sexta</th>
+      <th class="day-heading sabado">Sábado</th>
     </tr>
   </thead>
   <tbody>
@@ -23,13 +23,15 @@
       <tr>
         <ng-container *ngFor="let day of week">
           <td [ngClass]="getDayClass(day)">
-            {{ day || '' }}
-            <button *ngIf="day !== null" (click)="addReminder(day)">Add Reminder</button>
-            <ul *ngIf="day !== null && reminders[day]">
+            <span class="day-number">{{ day }}</span>
+            <button class="reminder-button" *ngIf="day !== null" (click)="addReminder(day)"></button>
+            <ul class="reminder-list" *ngIf="day !== null && reminders[day]">
               <li *ngFor="let reminder of reminders[day]!">
-                <span [style.color]="reminder.color">{{ reminder.text }}</span>
-                <button (click)="editReminder(day!, reminder)">Edit</button>
-                <button (click)="deleteReminder(day!, reminder)">Delete</button>
+                <div class="reminder-item">
+                  <span class="reminder-text" [style.color]="reminder.color">{{ reminder.text }}</span>
+                  <button class="edit-button" (click)="editReminder(day!, reminder)">Editar</button>
+                  <button class="delete-button" (click)="deleteReminder(day!, reminder)">Excluir</button>
+                </div>
               </li>
             </ul>
           </td>
